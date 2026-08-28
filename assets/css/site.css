@@ -133,9 +133,9 @@ p {
 }
 
 .wordmark {
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: 0.04em;
   color: var(--paper);
   line-height: 1;
 }
@@ -1305,6 +1305,12 @@ section {
 }
 
 @media (max-width: 620px) {
+  /* Caps are wider than the old lowercase cut, so step the lockup down
+     to keep the nav actions inside the shell on small screens. */
+  .wordmark {
+    font-size: 17px;
+  }
+
   .section {
     padding: 66px 0;
   }
