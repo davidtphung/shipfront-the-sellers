@@ -11,7 +11,7 @@
     <meta name="theme-color" content="#000000" />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 26'%3E%3Cg fill='%23000' stroke='%23FF6A00' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 9 L12 6 L17 9 L12 12 Z'/%3E%3Cpath d='M7 9 L7 16 L12 19 L17 16 L17 9'/%3E%3Cpath d='M12 12 L12 19'/%3E%3Cpath d='M12 6 L12 13 L7 16'/%3E%3Cpath d='M12 13 L17 16'/%3E%3C/g%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 26'%3E%3Cg stroke='%23FF6A00' stroke-width='1.1' stroke-linecap='butt' stroke-linejoin='miter' stroke-miterlimit='10'%3E%3Cpath d='M12,6L17.629,9.25L17.629,15.75L12,19L6.371,15.75L6.371,9.25Z' fill='%23000'/%3E%3Cpath d='M6.371,9.25L12,12.5L17.629,9.25' fill='none'/%3E%3Cpath d='M12,12.5L12,19' fill='none'/%3E%3C/g%3E%3C/svg%3E"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,11 +34,12 @@
             viewBox="0 0 24 26"
             aria-hidden="true"
           >
-            <path d="M7 9 L12 6 L17 9 L12 12 Z" />
-            <path d="M7 9 L7 16 L12 19 L17 16 L17 9" />
-            <path d="M12 12 L12 19" />
-            <path d="M12 6 L12 13 L7 16" />
-            <path d="M12 13 L17 16" />
+            <path
+              class="hex"
+              d="M12 6 L17.629 9.25 L17.629 15.75 L12 19 L6.371 15.75 L6.371 9.25 Z"
+            />
+            <path class="edge" d="M6.371 9.25 L12 12.5 L17.629 9.25" />
+            <path class="edge" d="M12 12.5 L12 19" />
           </svg>
           <span class="wordmark">shipfront</span>
         </a>
@@ -111,12 +112,13 @@
                 transform="rotate(-14 260 212)"
               />
             </svg>
-            <svg class="stage-cube" viewBox="0 0 24 26">
-              <path d="M7 9 L12 6 L17 9 L12 12 Z" />
-              <path d="M7 9 L7 16 L12 19 L17 16 L17 9" />
-              <path d="M12 12 L12 19" />
-              <path d="M12 6 L12 13 L7 16" />
-              <path d="M12 13 L17 16" />
+            <svg class="cube stage-cube" viewBox="0 0 24 26">
+              <path
+                class="hex"
+                d="M12 6 L17.629 9.25 L17.629 15.75 L12 19 L6.371 15.75 L6.371 9.25 Z"
+              />
+              <path class="edge" d="M6.371 9.25 L12 12.5 L17.629 9.25" />
+              <path class="edge" d="M12 12.5 L12 19" />
             </svg>
             <span class="stage-tag tag-1"><i></i>Inbound</span>
             <span class="stage-tag tag-2"><i></i>Storage</span>
@@ -484,22 +486,13 @@
                 stroke="rgba(255,106,0,0.35)"
                 stroke-width="1"
               />
-              <g
-                transform="translate(308,180) scale(1)"
-                stroke="#ff6a00"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                fill="#000"
-              >
-                <path d="M7 9 L12 6 L17 9 L12 12 Z" transform="translate(-6,-4)" />
+              <g class="cube" transform="translate(300.8,176) scale(1.6)">
                 <path
-                  d="M7 9 L7 16 L12 19 L17 16 L17 9"
-                  transform="translate(-6,-4)"
+                  class="hex"
+                  d="M12 6 L17.629 9.25 L17.629 15.75 L12 19 L6.371 15.75 L6.371 9.25 Z"
                 />
-                <path d="M12 12 L12 19" transform="translate(-6,-4)" />
-                <path d="M12 6 L12 13 L7 16" transform="translate(-6,-4)" />
-                <path d="M12 13 L17 16" transform="translate(-6,-4)" />
+                <path class="edge" d="M6.371 9.25 L12 12.5 L17.629 9.25" />
+                <path class="edge" d="M12 12.5 L12 19" />
               </g>
               <text
                 x="320"
@@ -562,11 +555,12 @@
                 viewBox="0 0 24 26"
                 aria-hidden="true"
               >
-                <path d="M7 9 L12 6 L17 9 L12 12 Z" />
-                <path d="M7 9 L7 16 L12 19 L17 16 L17 9" />
-                <path d="M12 12 L12 19" />
-                <path d="M12 6 L12 13 L7 16" />
-                <path d="M12 13 L17 16" />
+                <path
+                  class="hex"
+                  d="M12 6 L17.629 9.25 L17.629 15.75 L12 19 L6.371 15.75 L6.371 9.25 Z"
+                />
+                <path class="edge" d="M6.371 9.25 L12 12.5 L17.629 9.25" />
+                <path class="edge" d="M12 12.5 L12 19" />
               </svg>
               <span class="wordmark">shipfront</span>
             </a>

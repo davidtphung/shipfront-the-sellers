@@ -113,13 +113,23 @@ p {
   flex: none;
 }
 
-.mark .cube path {
+/* Regular hex silhouette, vertical corner up, three visible face edges
+   meeting at the single center vertex. Uniform stroke on hex and Y. */
+.cube .hex {
   fill: #000000;
+}
+
+.cube .edge {
+  fill: none;
+}
+
+.cube .hex,
+.cube .edge {
   stroke: var(--accent);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
+  stroke-width: 1.1;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  stroke-miterlimit: 10;
 }
 
 .wordmark {
@@ -436,14 +446,6 @@ section {
   max-width: 260px;
   filter: drop-shadow(0 24px 60px rgba(255, 106, 0, 0.28));
   animation: float 7s ease-in-out infinite;
-}
-
-.stage-cube path {
-  fill: #000000;
-  stroke: var(--accent);
-  stroke-width: 1.35;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }
 
 @keyframes float {

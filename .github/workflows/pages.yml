@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  pages: write
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -25,8 +26,36 @@ jobs:
           grep -q '1933 S. Broadway' contact.html
           grep -q 'mailto:info@myshipfront.com' contact.html
           grep -q '#ff6a00' assets/css/site.css
-          grep -q 'M7 9 L12 6 L17 9 L12 12 Z' index.html
           ! grep -rqP '[\x{2013}\x{2014}]' --include='*.html' --include='*.css' --include='*.js' --include='*.md' .
+      - name: Mark lock check
+        run: |
+          set -euo pipefail
+          # Regular hex silhouette: three visible face edges meeting at one
+          # center vertex, and no hidden back-face wire anywhere.
+          for f in index.html get-a-quote.html contact.html; do
+            hex=$(grep -c 'class="hex"' "$f")
+            edge=$(grep -c 'class="edge"' "$f")
+            test "$edge" -eq $((hex * 2))
+            grep -q 'M6.371 9.25 L12 12.5 L17.629 9.25' "$f"
+            grep -q 'M12 12.5 L12 19' "$f"
+            ! grep -q 'M12 6 L12 13' "$f"
+            ! grep -q 'M12 13 L17 16' "$f"
+            ! grep -q 'M7 9' "$f"
+          done
+          grep -q 'stroke-linecap: butt' assets/css/site.css
+          grep -q 'stroke-linejoin: miter' assets/css/site.css
+          ! grep -q 'non-scaling-stroke' assets/css/site.css
+      - name: Point Pages at main root
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh api -X PUT "repos/${GITHUB_REPOSITORY}/pages" \
+               -f 'source[branch]=main' -f 'source[path]=/' >/dev/null 2>&1; then
+            echo "Pages source is now main root"
+          else
+            echo "Could not change the Pages source; still serving gh-pages"
+          fi
       - name: Publish to gh-pages
         env:
           GH_TOKEN: ${{ github.token }}
