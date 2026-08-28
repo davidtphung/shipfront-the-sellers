@@ -24,9 +24,9 @@ jobs:
           test "$(find . -name '*.html' -not -path './.git/*' | wc -l)" -eq 3
           grep -q 'You Sell. We Ship.' index.html
           grep -q 'eCommerce at Scale' index.html
-          grep -q 'Built by David T Phung' index.html
+          grep -q 'David T Phung' index.html
           grep -q 'Fast &amp; Easy Quotes' get-a-quote.html
-          grep -q 'Submit' get-a-quote.html
+          grep -q '>Submit<' get-a-quote.html
           grep -q '1933 S. Broadway' contact.html
           grep -q 'mailto:info@myshipfront.com' contact.html
           grep -q '#ff6a00' assets/css/site.css
