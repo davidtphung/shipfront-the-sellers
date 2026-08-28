@@ -56,7 +56,10 @@ jobs:
         run: |
           set -euo pipefail
           git clone --quiet --depth 1 --branch gh-pages "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" /tmp/pages
-          rsync -a --delete --exclude '.git/' ./ /tmp/pages/
+          # Compare by content. A case-only edit keeps the byte count the
+          # same, and both trees are written in the same mtime second, so
+          # the default size and mtime check would skip the file.
+          rsync -a --checksum --delete --exclude '.git/' ./ /tmp/pages/
           cd /tmp/pages
           git add -A
           if git diff --cached --quiet; then
@@ -67,3 +70,10 @@ jobs:
               -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
               commit --quiet -m "Publish ${GITHUB_SHA}"
           git push --quiet origin gh-pages
+      - name: Verify gh-pages matches main
+        run: |
+          set -euo pipefail
+          for f in index.html get-a-quote.html contact.html assets/css/site.css; do
+            diff -q "$f" "/tmp/pages/$f"
+          done
+          echo "gh-pages matches main"
