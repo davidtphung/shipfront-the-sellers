@@ -5,7 +5,6 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
-  pages: write
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -45,17 +44,6 @@ jobs:
           grep -q 'stroke-linecap: butt' assets/css/site.css
           grep -q 'stroke-linejoin: miter' assets/css/site.css
           ! grep -q 'non-scaling-stroke' assets/css/site.css
-      - name: Point Pages at main root
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          if gh api -X PUT "repos/${GITHUB_REPOSITORY}/pages" \
-               -f 'source[branch]=main' -f 'source[path]=/' >/dev/null 2>&1; then
-            echo "Pages source is now main root"
-          else
-            echo "Could not change the Pages source; still serving gh-pages"
-          fi
       - name: Publish to gh-pages
         env:
           GH_TOKEN: ${{ github.token }}
