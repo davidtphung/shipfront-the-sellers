@@ -1,0 +1,42 @@
+name: pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lock check
+        run: |
+          set -euo pipefail
+          test "$(find . -name '*.html' -not -path './.git/*' | wc -l)" -eq 3
+          grep -q 'You Sell. We Ship.' index.html
+          grep -q 'eCommerce at Scale' index.html
+          grep -q 'Built by David T Phung' index.html
+          grep -q 'Fast &amp; Easy Quotes' get-a-quote.html
+          grep -q 'Submit' get-a-quote.html
+          grep -q '1933 S. Broadway' contact.html
+          grep -q 'mailto:info@myshipfront.com' contact.html
+          grep -q '#ff6a00' assets/css/site.css
+          grep -q 'M7 9 L12 6 L17 9 L12 12 Z' index.html
+          ! grep -rqP '[\x{2013}\x{2014}]' --include='*.html' --include='*.css' --include='*.js' --include='*.md' .
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
