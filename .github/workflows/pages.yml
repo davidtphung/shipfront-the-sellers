@@ -26,11 +26,12 @@ jobs:
           grep -q 'mailto:info@myshipfront.com' contact.html
           grep -q '#ff6a00' assets/css/site.css
           ! grep -rqP '[\x{2013}\x{2014}]' --include='*.html' --include='*.css' --include='*.js' --include='*.md' .
-      - name: Mark lock check
+      - name: Lockup lock check
         run: |
           set -euo pipefail
-          # Regular hex silhouette: three visible face edges meeting at one
-          # center vertex, and no hidden back-face wire anywhere.
+          # Cube: regular hex silhouette, three visible face edges meeting at
+          # one center vertex, no hidden back-face wire.
+          # Wordmark: all caps SHIPFRONT, never title case or lowercase.
           for f in index.html get-a-quote.html contact.html; do
             hex=$(grep -c 'class="hex"' "$f")
             edge=$(grep -c 'class="edge"' "$f")
@@ -40,10 +41,15 @@ jobs:
             ! grep -q 'M12 6 L12 13' "$f"
             ! grep -q 'M12 13 L17 16' "$f"
             ! grep -q 'M7 9' "$f"
+            test "$(grep -c '<span class="wordmark">SHIPFRONT</span>' "$f")" -eq 2
+            ! grep -q '<span class="wordmark">shipfront</span>' "$f"
+            ! grep -q '<span class="wordmark">Shipfront</span>' "$f"
           done
           grep -q 'stroke-linecap: butt' assets/css/site.css
           grep -q 'stroke-linejoin: miter' assets/css/site.css
           ! grep -q 'non-scaling-stroke' assets/css/site.css
+          # The wordmark rule must stay bold; 400 or 500 is a regression.
+          grep -A 5 '^\.wordmark {' assets/css/site.css | grep -q 'font-weight: 700;'
       - name: Publish to gh-pages
         env:
           GH_TOKEN: ${{ github.token }}
